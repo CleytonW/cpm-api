@@ -12,7 +12,7 @@ import br.com.cpm.api.repository.ProdutoRepository;
 @Service
 public class ProdutoService {
     
-    public List<Produto> carregarCategoria() {
+    public List<Produto> carregarProdutos() {
         return produtoRepository.findAll();
     }
 
