@@ -2,6 +2,7 @@ package br.com.cpm.api.model;
 
 import java.math.BigDecimal;
 
+import br.com.cpm.api.dto.ProdutoDTO;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -37,5 +38,18 @@ public class Produto {
     @ManyToOne
     @JoinColumn(nullable = false)
     private Categoria categoria;
+
+    public ProdutoDTO converterParaDTO() {
+
+        ProdutoDTO dto = new ProdutoDTO();
+
+        dto.setId(id);
+        dto.setNome(nome);
+        dto.setPreco(preco);
+        dto.setDescricao(descricao);
+        dto.setCategoria(categoria);
+
+        return dto;
+    }
 
 }

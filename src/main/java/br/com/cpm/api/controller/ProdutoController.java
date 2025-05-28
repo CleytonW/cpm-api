@@ -1,6 +1,7 @@
 package br.com.cpm.api.controller;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.cpm.api.dto.ProdutoDTO;
 import br.com.cpm.api.model.Produto;
 import br.com.cpm.api.service.ProdutoService;
 
@@ -23,15 +25,15 @@ import br.com.cpm.api.service.ProdutoService;
 public class ProdutoController {
 
     @GetMapping
-    public ResponseEntity<List<Produto>> listarProdutos() {
+    public ResponseEntity<List<ProdutoDTO>> listarProdutos() {
         return ResponseEntity.ok().body(produtoService.carregarProdutos());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Optional<Produto>> buscarProdutoPeloId(@PathVariable("id") Long id) {
-        Optional<Produto> produto = produtoService.carregarDadosProdutosPeloId(id);
+    public ResponseEntity<ProdutoDTO> buscarProdutoPeloId(@PathVariable("id") Long id) {
+        ProdutoDTO produto = produtoService.carregarDadosProdutosPeloId(id);
 
-        if (produto.isEmpty()) {
+        if (Objects.isNull(produto)) {
             return ResponseEntity.notFound().build();
         }
 
@@ -40,9 +42,9 @@ public class ProdutoController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Optional<Produto>> deletarProduto(@PathVariable("id") Long id) {
-        Optional<Produto> produto = produtoService.carregarDadosProdutosPeloId(id);
+        ProdutoDTO produto = produtoService.carregarDadosProdutosPeloId(id);
 
-        if (produto.isEmpty()) {
+        if (Objects.isNull(produto)) {
             return ResponseEntity.notFound().build();
         }
 
@@ -58,9 +60,9 @@ public class ProdutoController {
 
     @PutMapping("/{id}")
     public ResponseEntity<Produto> atualizarProduto(@PathVariable("id") Long id, @RequestBody Produto dadosProduto) {
-        Optional<Produto> produto = produtoService.carregarDadosProdutosPeloId(id);
+        ProdutoDTO produto = produtoService.carregarDadosProdutosPeloId(id);
 
-        if (produto.isEmpty()) {
+        if (Objects.isNull(produto)) {
             return ResponseEntity.notFound().build();
         }
 
